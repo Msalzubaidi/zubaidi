@@ -104,7 +104,7 @@ $row2 = mysqli_fetch_assoc($result2);
 
     <button id="payment-button" type="submit" name="update" class="btn btn-lg btn-info btn-block">
     	<i class="fa fa-plus fa-lg"></i>&nbsp;
-    	<span id="payment-button-amount">Update </span>
+    	<span id="payment-button-amount">Update Now </span>
 
     </button>
   </div>

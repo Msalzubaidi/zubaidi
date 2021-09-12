@@ -8,9 +8,14 @@ if(isset($_POST['save']))
 	$pro_desc = $_POST['pro_desc'];
 	$pro_price = $_POST['pro_price'];
 	$cat_id = $_POST['selectcat'];
-
 	
-	$query="Insert into product (pro_name , pro_desc , pro_price , cat_id  ) Values ('$pro_name' , '$pro_desc' , '$pro_price' , '$cat_id' )";
+  $pro_image=$_FILES['pro_image']['name'];
+  $tmp_name=$_FILES['pro_image']['tmp_name'];
+  $path='proimages/';
+   move_uploaded_file($tmp_name, $path.$pro_image);
+	
+	
+	$query="Insert into product (pro_name , pro_desc , pro_price , cat_id , pro_image ) Values ('$pro_name' , '$pro_desc' , '$pro_price' , '$cat_id' , '$pro_image')";
 	
 	mysqli_query($conn , $query);
 
@@ -34,7 +39,7 @@ include('includes/admin_header.php');
 								<h3 class="text-center title-2">Create New Product</h3>
 							</div>
 							<hr>
-							<form action="" method="post" novalidate="novalidate">
+							<form action="" method="post" novalidate="novalidate" enctype="multipart/form-data">
 
 								<div class="row form-group">
 									<div class="col col-md-3">
@@ -72,14 +77,18 @@ include('includes/admin_header.php');
 
 
 
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-image"></i>
+						</div>
+						<input type="file" id="pro_image" name="pro_image" placeholder="Product Image" 
+						class="form-control">
+					</div>
+				</div>
 
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#imagePicker" style="width:200px; margin:5px auto;">
-Choose Image</button>
-
-
-
-<button id="payment-button" type="submit" name="save" class="btn btn-lg btn-info btn-block">
+<button id="save-button" type="submit" name="save" class="btn btn-lg btn-info btn-block">
 									<i class="fa fa-plus fa-lg"></i>&nbsp;
 									<span id="payment-button-amount">Add </span>
 
@@ -100,8 +109,7 @@ Choose Image</button>
 						<th>Name</th>
 						<th>Description</th>
 						<th>Price</th>
-						<th>View Image</th>
-
+						<th>Image</th>
 						<th>Update</th>
 						<th>Delete</th>
 
@@ -128,7 +136,8 @@ Choose Image</button>
 						echo"<td>{$row['pro_desc']}</td>";	
 						echo"<td>{$row['pro_price']}</td>";	
 					
-								echo"<td><a href='update_category.php?id={$row['pro_id']}' class='btn btn-info'>View Image</td>";
+						//		echo"<td><a href='update_category.php?id={$row['pro_id']}' class='btn btn-info'>View Image</td>";
+						    echo"<td> <img src='proimages/{$row['pro_image']}' alt=' No Image Uploaded' width='100' height='100'></td>";
 												echo"<td><a href='update_product.php?id={$row['pro_id']}' class='btn btn-warning'>Update</td>";
 												echo"<td><a href='delete_product.php?id={$row['pro_id']}' class='btn btn-danger'>Delete</td>";
 												echo "</tr>";

@@ -1,4 +1,12 @@
+<?php 
 
+session_start();
+if(!isset($_SESSION['admin_id']))
+{
+    header("location:admin_login.php");
+}
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -421,7 +429,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="admin_logout.php">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>

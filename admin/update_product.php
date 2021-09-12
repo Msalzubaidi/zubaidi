@@ -9,8 +9,14 @@ if(isset($_POST['update']))
 	$pro_price = $_POST['pro_price'];
 	$cat_id = $_POST['selectcat'];
 
+	  $pro_image=$_FILES['pro_image']['name'];
+    $tmp_name=$_FILES['pro_image']['tmp_name'];
+    $path='proimages/';
+   move_uploaded_file($tmp_name, $path.$pro_image);
 	
-	$query="update  product  set pro_name ='$pro_name' , pro_desc='$pro_desc' , pro_price='$pro_price' , cat_id='$cat_id' where pro_id ={$_GET['id']} ";
+
+	
+	$query="update  product  set pro_name ='$pro_name' , pro_desc='$pro_desc' , pro_price='$pro_price' , cat_id='$cat_id' , pro_image='$pro_image' where pro_id ={$_GET['id']} ";
 	
 	mysqli_query($conn , $query);
 
@@ -48,10 +54,10 @@ $row2 = mysqli_fetch_assoc($result2);
 						<div class="card-header">Manage Products</div>
 						<div class="card-body">
 							<div class="card-title">
-								<h3 class="text-center title-2">Create New Product</h3>
+								<h3 class="text-center title-2">Update Product</h3>
 							</div>
 							<hr>
-							<form action="" method="post" novalidate="novalidate">
+							<form action="" method="post" novalidate="novalidate" enctype="multipart/form-data">
 
 								<div class="row form-group">
 									<div class="col col-md-3">
@@ -75,31 +81,35 @@ $row2 = mysqli_fetch_assoc($result2);
 
     <div class="form-group">
     	<label for="cc-cat_id" class="control-label mb-1">Category</label>
-    	<input id="cc-cat_id" name="curretcat"  type="text" class="form-control" value=<?php echo $row2['cat_name'];?> >
+    	<input id="cc-cat_id" name="curretcat"  type="text" class="form-control" value="<?php echo $row2['cat_name'];?>" >
     </div>
 
     <div class="form-group">
     	<label for="cc-product" class="control-label mb-1">Product Name</label>
-    	<input id="cc-product" name="pro_name" type="text" class="form-control" value=<?php echo $row['pro_name'];?> >
+    	<input id="cc-product" name="pro_name" type="text" class="form-control" value="<?php echo $row['pro_name'];?>" >
     </div>
 
     <div class="form-group">
     	<label for="cc-desc" class="control-label mb-1">Product Descrption</label>
-    	<input id="cc-desc" name="pro_desc" type="text" class="form-control"  value=<?php echo $row['pro_desc'];?> >
+    	<input id="cc-desc" name="pro_desc" type="text" class="form-control"  value="<?php echo $row['pro_desc'];?> ">
     </div>
 
     <div class="form-group">
     	<label for="cc-price" class="control-label mb-1">Product Price</label>
-    	<input id="cc-price" name="pro_price" type="text" class="form-control" value=<?php echo $row['pro_price'];?> >
+    	<input id="cc-price" name="pro_price" type="text" class="form-control" value="<?php echo $row['pro_price'];?>" >
     </div>
 
 
 
-
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#imagePicker" style="width:200px; margin:5px auto;">
-    Choose Image</button>
-
+	<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-image"></i>
+						</div>
+						<input type="file" id="pro_image" name="pro_image" placeholder="Product Image" 
+						class="form-control">
+					</div>
+				</div>
 
 
     <button id="payment-button" type="submit" name="update" class="btn btn-lg btn-info btn-block">

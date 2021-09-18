@@ -147,22 +147,36 @@ else
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
                     All Products
                 </button>
+                <?php 
+                 include('admin/includes/connection.php');
+            $query="Select * from category";
+            $AllProductquery="Select * from product ";
+            $OneCatquery="Select * from product where cat_id={$_GET['id']}";
+            $query_result=mysqli_query($conn , $query);
+            $check_categories_count = mysqli_num_rows($query_result) > 0;
+
+            if($check_categories_count)
+            {
+                while($row = mysqli_fetch_assoc($query_result))
+                {   
+                    ?>
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-                    Women
+                 <?php echo $row['cat_name']; ?>
                 </button>
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-                    Men
-                </button>
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-                    Bag
-                </button>
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-                    Shoes
-                </button>
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-                    Watches
-                </button>
+
+       <?php   } 
+       }
+else 
+{
+  echo "No Categries To Display";  
+}
+
+?>
+
+
+
             </div>
+            <!----------------Here Prodects------------>
             <div class="flex-w flex-c-m m-tb-10">
                 <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
                     <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
